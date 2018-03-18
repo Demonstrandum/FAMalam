@@ -10,8 +10,11 @@ Gem::Specification.new do |s|
   s.description = "FAMalam is a front end web interface for FAM"
   s.authors     = ["Demonstrandum"]
   s.email       = 'knutsen@jetspace.co'
-  s.files       = Dir.glob("{bin,lib}/**/*") + %w(LICENSE README.md DOC.md)
+  s.files       = Dir.glob("{bin,lib}/**/*") + %w(LICENSE README.md)
   s.require_path= 'lib'
+  s.add_dependency 'fam', '~> 0.0', '>= 0.0.1'
+  s.add_dependency 'haml', '~> 5.0', '>= 5.0.4'
+  s.add_dependency 'sinatra', '~> 2.0', '>= 2.0.1'
   s.homepage    = 'https://github.com/Demonstrandum/FAM'
   s.license     = 'GPL-2.0'
 end

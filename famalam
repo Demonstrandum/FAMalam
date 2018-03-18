@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+require 'famalam'
+require 'sinatra'
+
+configure do
+  use Rack::Session::Pool
+end
+
+set :threads, []
+
+get '/' do
+  haml :index
+end
+
+post '/program' do
+  code = params[:code]
+  session[:code] = code
+  session[:clock] = params[:clock]
+
+  lexed  = FAM::Syntax::Lexer.lex code
+  parsed = FAM::Syntax::Parser.parse lexed.tokens
+  tree = parsed.ast
+  ram = FAM::Machine::RAM.new '100B'
+  cpu = FAM::Machine::CPU.new ram
+
+  session[:cpu] = cpu
+  session[:tree] = tree
+  session[:running] = true
+end
+
+get '/program/step.json' do
+  response = {}
+  puts "code: #{session[:code]}"
+  unless session[:cpu].nil?
+    status = session[:cpu].step session[:tree]
+    if status[:state] == 'running'
+      content_type :json
+      response = {
+        :ram => session[:cpu].ram.to_a,
+        :registers  => session[:cpu].registers,
+        :running => session[:running],
+        :output => status[:output] ? session[:cpu].output : ''
+      }
+    else
+      response = { :ERROR => 'Program halted.' }
+    end
+  else
+    response = { :ERROR => 'Code not sent!' }
+  end
+  response.to_json
+end
+
+get '/program' do
+  haml :program
+end

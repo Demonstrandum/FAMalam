@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %title FAMalam
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/styles/master.css"}
+
+  %body
+    %form{:action => "/program", :method => "POST"}
+      %label{:for => "name"} Title:
+      %input{:type => "text", :name => "title"}
+      %input{:type => "text", :name => "clock", :value => "1"}
+      %textarea{:name => "code", :id => "code", :rows => "20"}
+
+      %input{:type => "submit", :id => "submit", :value => "Save"}
+
+      %script{:type=> "text/javascript", :src => "https://code.jquery.com/jquery-3.3.1.min.js"}
+      %script{:type=> "text/javascript", :src => "/scripts/graphics.js"}
+      %script{:type=> "text/javascript", :src => "/scripts/step.js"}
+      %script{:type=> "text/javascript", :src => "/scripts/submitter.js"}
