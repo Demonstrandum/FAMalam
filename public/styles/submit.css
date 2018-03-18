@@ -1,0 +1,50 @@
+#post {
+  width: 12em;
+  height: calc(100vh - 5rem);
+  margin: 1em;
+  padding: 1.5em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#post input, #post #code {
+  display: block;
+  margin: 0 0 1em 0;
+  width: 100%;
+  font-family: 'Rubik', sans-serif;
+}
+#post input:last-child {
+  margin: 0;
+}
+#post input[name=title] {
+  border: none;
+  border-bottom: 1px dotted #ccc;
+  font-size: 1.5em;
+}
+
+#post #code {
+  padding: 0.5em;
+  width: calc(100% - 1em);
+  margin: 0 0 1em 0;
+  resize: none;
+  height: calc(100% - 11em);
+  font-family: 'FantasqueSansMonoRegular', monospace;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+#post input[type=submit] {
+  background: #fff;
+  color: #333;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  cursor: pointer;
+  transition: all .1s ease-in-out;
+}
+#post input[type=submit]:active {
+  background: #f3f3f3;
+  border: 1px solid #ccc;
+}
+#post input[type=submit]:hover {
+  background: #f8f8f8;
+}

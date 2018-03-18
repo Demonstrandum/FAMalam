@@ -3,17 +3,37 @@
   %head
     %title FAMalam
     %link{:rel => "stylesheet", :type => "text/css", :href => "/styles/master.css"}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/styles/submit.css"}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/styles/ram.css"}
 
   %body
-    %form{:action => "/program", :method => "POST"}
-      %label{:for => "name"} Title:
-      %input{:type => "text", :name => "title"}
-      %input{:type => "text", :name => "clock", :value => "1"}
-      %textarea{:name => "code", :id => "code", :rows => "20"}
+    %form{:id => "post", :action => "/program", :method => "POST"}
+      %input{:type => "text", :autofocus => "", :autocomplete => "off", :name => "title", :placeholder => "Project Title"}
+      %datalist{:id => "tickmarks"}
+        %option{:value => "1", :label => "1"}
+        %option{:value => "1.5"}
+        %option{:value => "2"}
+        %option{:value => "2.5"}
+        %option{:value => "3", :label => "3"}
+        %option{:value => "3.5"}
+        %option{:value => "4"}
+        %option{:value => "4.5"}
+        %option{:value => "5", :label => "5"}
+      %input{:type => "range", :name => "clock",
+        :value => "1", :list => "tickmarks",
+        :max => "5", :min => "1", :step => "0.5"}
 
-      %input{:type => "submit", :id => "submit", :value => "Save"}
 
-      %script{:type=> "text/javascript", :src => "https://code.jquery.com/jquery-3.3.1.min.js"}
-      %script{:type=> "text/javascript", :src => "/scripts/graphics.js"}
-      %script{:type=> "text/javascript", :src => "/scripts/step.js"}
-      %script{:type=> "text/javascript", :src => "/scripts/submitter.js"}
+      %textarea{:name => "code", :id => "code",
+        :autocomplete => "off",
+        :autocorrect => "off",
+        :autocapitalize => "off",
+        :spellcheck => "false"}
+        HALT 0
+
+      %input{:type => "submit", :id => "submit", :value => "Run"}
+
+    %script{:type=> "text/javascript", :src => "https://code.jquery.com/jquery-3.3.1.min.js"}
+    %script{:type=> "text/javascript", :src => "/scripts/graphics.js"}
+    %script{:type=> "text/javascript", :src => "/scripts/step.js"}
+    %script{:type=> "text/javascript", :src => "/scripts/submitter.js"}
