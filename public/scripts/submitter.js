@@ -9,6 +9,7 @@ $(document).ready(() => {
       data: {
         title: $('input[name=title]').val(),
         code:  $('textarea[name=code]').val(),
+        alloc: get_alloc(),
         clock: clock,
       },
       error: () => {

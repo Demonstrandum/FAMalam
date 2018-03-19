@@ -1,7 +1,7 @@
 let get_clock = () => {
   let c = Math.abs($('input[name=clock]').val() - 0) + 0.001;
-  if (c > 11) {
-    $('input[name=clock]').val("10");
+  if (c > 21) {
+    $('input[name=clock]').val("20");
     get_clock();
   }
   return c;

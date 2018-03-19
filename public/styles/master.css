@@ -11,3 +11,19 @@ body, html {
   font-family: 'Rubik', sans-serif;
   color: #222;
 }
+
+
+#post, .computer {
+  height: calc(100vh - 5rem);
+  margin: 1em;
+}
+
+#post {
+  width: 14em;
+  float: left;
+  padding: 1.5em;
+}
+.computer {
+  width: 44em;
+  float: right;
+}

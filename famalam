@@ -15,12 +15,13 @@ end
 post '/program' do
   code = params[:code]
   session[:code] = code
-  session[:clock] = params[:clock]
+  session[:clock] = params[:clock] || 2
+  session[:alloc] = params[:alloc] || 120
 
   lexed  = FAM::Syntax::Lexer.lex code
   parsed = FAM::Syntax::Parser.parse lexed.tokens
   tree = parsed.ast
-  ram = FAM::Machine::RAM.new '100B'
+  ram = FAM::Machine::RAM.new session[:alloc]
   cpu = FAM::Machine::CPU.new ram
 
   session[:cpu] = cpu

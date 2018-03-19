@@ -2,26 +2,30 @@
 %html
   %head
     %title FAMalam
+    %link{:rel => "stylesheet", :type => "text/css", :href => "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"}
     %link{:rel => "stylesheet", :type => "text/css", :href => "/styles/master.css"}
     %link{:rel => "stylesheet", :type => "text/css", :href => "/styles/submit.css"}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/styles/cpu.css"}
     %link{:rel => "stylesheet", :type => "text/css", :href => "/styles/ram.css"}
-
+    %script{:type=> "text/javascript", :src => "https://code.jquery.com/jquery-3.3.1.min.js"}
+    %script{:type=> "text/javascript", :src => "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"}
   %body
     %form{:id => "post", :action => "/program", :method => "POST"}
       %input{:type => "text", :autofocus => "", :autocomplete => "off", :name => "title", :placeholder => "Project Title"}
       %datalist{:id => "tickmarks"}
-        %option{:value => "1", :label => "1"}
-        %option{:value => "1.5"}
-        %option{:value => "2"}
-        %option{:value => "2.5"}
-        %option{:value => "3", :label => "3"}
-        %option{:value => "3.5"}
+        %option{:value => "2", :label => "2"}
         %option{:value => "4"}
-        %option{:value => "4.5"}
-        %option{:value => "5", :label => "5"}
+        %option{:value => "6"}
+        %option{:value => "8"}
+        %option{:value => "10", :label => "10"}
+        %option{:value => "12"}
+        %option{:value => "14"}
+        %option{:value => "16"}
+        %option{:value => "18"}
+        %option{:value => "20", :label => "20"}
       %input{:type => "range", :name => "clock",
         :value => "1", :list => "tickmarks",
-        :max => "5", :min => "1", :step => "0.5"}
+        :max => "20", :min => "2", :step => "1"}
 
 
       %textarea{:name => "code", :id => "code",
@@ -29,11 +33,44 @@
         :autocorrect => "off",
         :autocapitalize => "off",
         :spellcheck => "false"}
-        HALT 0
+        = preserve do
+          :escaped
+                STORE 55 : @0
+                DATA dyn : 0b01101
+                LOAD -0xf : &DAT
+                LOAD &DAT : &ACC
 
+            LOOP:
+                ADD 1 : &ACC
+                OUT &ACC
+                STORE &ACC : dyn
+
+                MORE &ACC : 29
+                    | GOTO END
+                    | GOTO LOOP
+
+            END: HALT 0
+
+
+
+      %select{:id => "alloc"}
+        %option{:value => "120", :selected => ""}120B
+        %option{:value => "94"}94B
+        %option{:value => "64"}64B
+        %option{:value => "32"}32B
       %input{:type => "submit", :id => "submit", :value => "Run"}
 
-    %script{:type=> "text/javascript", :src => "https://code.jquery.com/jquery-3.3.1.min.js"}
+    .computer
+      .cpu
+        .CU
+          %span{} Registers
+          .registers
+        .output
+        .input
+          %input{:type => "text",
+            :autofocus => "", :autocomplete => "off",
+            :name => "input", :placeholder => "INPUT"}
+      .ram
     %script{:type=> "text/javascript", :src => "/scripts/graphics.js"}
     %script{:type=> "text/javascript", :src => "/scripts/step.js"}
     %script{:type=> "text/javascript", :src => "/scripts/submitter.js"}

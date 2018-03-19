@@ -1,0 +1,47 @@
+.cpu {
+  float: left;
+  width: 10em;
+  border: 1px dotted #ccc;
+  border-radius: 4px;
+  padding: 1em;
+}
+
+.cpu .input, .cpu .input input {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.cpu .CU {
+  width: calc(100% - 8px);
+  padding: 4px;
+  margin: 0 0 5px 0;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  min-height: 1em;
+}
+
+.cpu .registers {
+  margin: 5px 0;
+  padding: 0 3px;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  min-height: 5px;
+}
+.cpu .register {
+  margin: 4px 0;
+  border: 1px solid #e1e1e1;
+  border-radius: 3px;
+  padding: 0;
+  font-family: 'FantasqueSansMonoRegular', monospace;
+}
+.cpu .register .name {
+  display: inline-block;
+  text-align: right;
+  padding: 2px 4px 2px 0;
+  border-right: 1px solid #e1e1e1;
+  width: 2.4em;
+}
+
+.cpu .register .value {
+  display: inline-block;
+}
