@@ -1,10 +1,10 @@
-let pad = (n, width, char) => {
+const pad = (n, width, char) => {
   char = char || '0';
   n = n + '';
   return n.length >= width ? n : new Array(width - n.length + 1).join(char) + n;
 }
 
-let draw_step = (step) => {
+const draw_step = (step) => {
   if (step['ERROR']) {
     $('#alloc').removeAttr('disabled');
     return;
@@ -37,6 +37,7 @@ let draw_step = (step) => {
   let out_elem = $('.cpu .output');
   if (step['output'] != '') {
     out_elem.append(`<div>` + step['output'] + `</div>`);
+    out_elem.animate({ scrollTop: out_elem.prop("scrollHeight")}, 100);
   }
 }
 
@@ -65,7 +66,8 @@ draw_ram = () => {
 $('#alloc').change(draw_ram);
 
 $(document).ready(() => {
-
+  // disable inputs
+  $('input[name=input]').prop('disabled', true);
   // Initiate RAM
   draw_ram();
 });

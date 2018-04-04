@@ -29,6 +29,11 @@ post '/program' do
   session[:running] = true
 end
 
+post '/program/input' do
+  session[:input] = params[:input].to_i || -1  # #to_i won't work for chars, use #ord IF char
+  session[:cpu].inject_input session[:input]
+end
+
 get '/program/step.json' do
   response = {}
   puts "code: #{session[:code]}"
@@ -40,8 +45,10 @@ get '/program/step.json' do
         :ram => session[:cpu].ram.to_a,
         :registers  => session[:cpu].registers,
         :running => session[:running],
-        :output => status[:output] ? session[:cpu].output : ''
+        :output => status[:output] ? session[:cpu].output : '',
+        :inputting => status[:input]
       }
+      session[:cpu].inject_input session[:input]
     else
       response = { :ERROR => 'Program halted.' }
     end

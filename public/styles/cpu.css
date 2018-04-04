@@ -14,18 +14,18 @@
 .cpu .CU {
   width: calc(100% - 8px);
   padding: 4px;
-  margin: 0 0 5px 0;
+  margin: 5px 0;
   border: 1px solid #e1e1e1;
   border-radius: 4px;
   min-height: 1em;
 }
 
-.cpu .registers {
+.cpu .registers, .cpu .output {
   margin: 5px 0;
   padding: 0 3px;
   border: 1px solid #e1e1e1;
   border-radius: 4px;
-  min-height: 5px;
+  min-height: 1em;
 }
 .cpu .register {
   margin: 4px 0;
@@ -41,7 +41,28 @@
   border-right: 1px solid #e1e1e1;
   width: 2.4em;
 }
-
 .cpu .register .value {
   display: inline-block;
+}
+
+.cpu .output {
+  overflow-y: scroll;
+  padding: 0;
+  min-height: 2em;
+  max-height: 4em;
+}
+.cpu .output div {
+  padding: 0 0.5em;
+  font-family: 'FantasqueSansMonoRegular', monospace;
+}
+.cpu .output div:nth-child(2n) {
+  background: #f4f4f4;
+}
+
+.cpu .input input {
+  width: calc(100% - 4px);
+  margin: 5px 0 0 0;
+  padding: 3px 2px;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
 }

@@ -62,14 +62,17 @@
 
     .computer
       .cpu
+        %span Control Unit
         .CU
-          %span{} Registers
+          %span Registers
           .registers
+        %span Output
         .output
+        %span Input
         .input
           %input{:type => "text",
             :autofocus => "", :autocomplete => "off",
-            :name => "input", :placeholder => "INPUT"}
+            :name => "input", :placeholder => "Enter value"}
       .ram
     %script{:type=> "text/javascript", :src => "/scripts/graphics.js"}
     %script{:type=> "text/javascript", :src => "/scripts/step.js"}

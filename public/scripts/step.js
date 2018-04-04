@@ -1,4 +1,4 @@
-let get_clock = () => {
+const get_clock = () => {
   let c = Math.abs($('input[name=clock]').val() - 0) + 0.001;
   if (c > 21) {
     $('input[name=clock]').val("20");
@@ -7,11 +7,63 @@ let get_clock = () => {
   return c;
 }
 
-let stepper = () => {
-  let clock = get_clock();
-  let clock_clallback;
+const handle_input = interval => {
+  console.log('INPUTTING');
+  interval.disable();
+  let input_box = $('input[name=input]')
+  input_box.prop('disabled', false);
+  input_box.focus();
 
-  let response = () => {
+  let input;
+  const wait = () => {
+    console.log('waiting...');
+    if (!input_box.val()) window.setTimeout(wait, 5);
+    else {
+      input = input_box.val();
+      interval.enable();
+      input_box.val('');
+      input_box.attr('placeholder', input);
+      input_box.blur();
+      input_box.prop('disabled', true);
+
+      $.ajax({
+        type: 'POST',
+        url: '/program/input',
+        async: false,
+        data: { input: input + " ...in" },
+        error: (s, e) => {
+          console.log('Input was not received!\nERROR: ', s, '\n\n', e);
+        }
+      });
+      return;
+    }
+  }
+  wait();
+  input_box.attr('placeholder', '');
+  return input;
+}
+
+class ClockInterval {
+  constructor(f, speed) {
+    this.lambda = f;
+    this.speed = speed;
+    this.interval = null;
+  }
+  enable(speed=this.speed) {
+    this.speed = speed;
+    this.interval = window.setInterval(this.lambda, (1.0 / speed) * 1000);
+  }
+  disable() {
+    window.clearInterval(this.interval);
+  }
+}
+
+
+const stepper = () => {
+  let clock = get_clock();
+  let step_interval;
+
+  const response = () => {
     let step = {};
     $.ajax({
         url: "/program/step.json",
@@ -21,23 +73,24 @@ let stepper = () => {
             step = data;
         }
     });
-    if (step['ERROR']) {
-      window.clearInterval(clock_clallback);
-    }
+    if (step['ERROR'])     step_interval.disable();
+    if (step['inputting']) handle_input(step_interval);
     return step;
   }
 
-  let update = () => {
+  const update = () => {
     let step = response();
     console.log("Errors: ", step['ERROR']);
     console.log("Step:   ", step);
     draw_step(step);
   }
 
-  clock_clallback = window.setInterval(update, (1.0 / clock) * 1000);
+
+  step_interval = new ClockInterval(update, clock)
+  step_interval.enable();
   $('input[name=clock]').on("change paste keyup", () => {
     clock = get_clock();
-    window.clearInterval(clock_clallback);
-    clock_clallback = window.setInterval(update, (1.0 / clock) * 1000);
+    step_interval.disable();
+    step_interval.enable(clock);
   });
 }
