@@ -8,7 +8,6 @@ const get_clock = () => {
 }
 
 const handle_input = interval => {
-  console.log('INPUTTING');
   interval.disable();
   let input_box = $('input[name=input]')
   input_box.prop('disabled', false);
@@ -21,10 +20,11 @@ const handle_input = interval => {
     else {
       input = input_box.val();
       interval.enable();
-      input_box.val('');
-      input_box.attr('placeholder', input);
-      input_box.blur();
-      input_box.prop('disabled', true);
+      input_box
+        .val('')
+        .attr('placeholder', input)
+        .blur()
+        .prop('disabled', true);
 
       $.ajax({
         type: 'POST',
@@ -32,7 +32,10 @@ const handle_input = interval => {
         async: false,
         data: { input: input + " ...in" },
         error: (s, e) => {
-          console.log('Input was not received!\nERROR: ', s, '\n\n', e);
+          console.log(
+            'An error occured in posting input!\nERROR: ',
+            s, '\n\n', e
+          );
         }
       });
       return;
