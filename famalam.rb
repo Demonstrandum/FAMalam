@@ -1,11 +1,15 @@
 #!/usr/bin/env ruby
 require 'famalam'
 require 'sinatra'
+require 'rack/ssl' #
+use Rack::SSL 
 
 configure do
   use Rack::Session::Pool
 end
 
+set :server, 'unicorn'
+set :port, 4567
 set :threads, []
 
 get '/' do
@@ -61,3 +65,16 @@ end
 get '/program' do
   haml :program
 end
+
+get '/.well-known/acme-challenge/:token' do
+  status 200
+
+  file_path = "/var/www/letsencrypt/.well-known/acme-challenge/#{params[:token].gsub ':', ''}"
+  sleep 0.1 until File.exist? file_path
+
+  file_contents = File.read file_path
+  body file_contents
+  file_contents
+  return
+end
+
