@@ -1,6 +1,10 @@
 # gem
 *.gem
 
+# Shh, web stuff
+tmp/
+log/
+
 ## System and release files ##
 # OS files
 .DS_Store
