@@ -1,15 +1,16 @@
 #!/usr/bin/env ruby
+module FAM; end
+module FAM::Syntax; end;  # Tell older v. of Ruby to shut up.
+
 require 'famalam'
 require 'sinatra'
-require 'rack/ssl' #
-use Rack::SSL 
 
 configure do
   use Rack::Session::Pool
 end
 
 set :server, 'unicorn'
-set :port, 4567
+set :port, 8080
 set :threads, []
 
 get '/' do
